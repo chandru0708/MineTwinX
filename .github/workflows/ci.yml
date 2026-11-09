@@ -1,0 +1,42 @@
+name: MineTwin-X CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    name: Build & Verify Client & Server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js v20
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    - name: Install Root Dependencies
+      run: npm install
+
+    - name: Install & Build Server
+      run: |
+        cd server
+        npm install
+        npm run build
+
+    - name: Install & Build Client (Vite + TypeScript)
+      run: |
+        cd client
+        npm install
+        npm run build
+
+    - name: Verify Distribution Artifacts
+      run: |
+        test -f client/dist/index.html && echo "Client build verified!"
+        test -f server/dist/index.js && echo "Server build verified!"
