@@ -1,0 +1,18 @@
+{
+  "name": "minetwin-x",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MineTwin-X: Autonomous Multimodal 4D Digital Twin and Intelligent Inspection Robot for GPS-Denied Environments",
+  "scripts": {
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "build": "npm run build --prefix client && npm run build --prefix server",
+    "start": "node server/dist/index.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
+
